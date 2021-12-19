@@ -10,7 +10,7 @@ namespace synmath {
     protected:
         /**
          * @brief The internal representation of the matrix.
-         * It is a contigous, static allocated array of \f$ M \times N \f$ double values.
+         * It is a contigous, heap allocated array of \f$ M \times N \f$ double values.
          */
         double* _mat;
         /**
@@ -29,6 +29,8 @@ namespace synmath {
          * @param n 
          */
         SynMatrix(uint32_t m, uint32_t n);
+
+
     };
 };
 

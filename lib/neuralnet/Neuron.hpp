@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 
-#include <math/Vector.hpp>
+#include <math/SynVector.hpp>
 
 namespace synnet {
 
@@ -16,10 +16,17 @@ namespace synnet {
     template <typename T>
     class Neuron {
     private:
+        /**
+         * @brief Neuron weight vector.
+         */
         Vector _weights;
+        /**
+         * @brief Activation function for the given neuron.
+         * Returns a value in T's domain based on the neuron output's value.
+         */
         std::function<T(double)> _act_func;
     public:
-        Neuron(std::initializer_list<double> w, std::function<T(double)> fn)
+        Neuron(std::initializer_list<double> w, std::function<T(double)> fn);
     };
 };
 
