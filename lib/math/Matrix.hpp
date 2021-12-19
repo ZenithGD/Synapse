@@ -6,7 +6,7 @@
 
 namespace synmath {
 
-    class Matrix {
+    class SynMatrix {
     protected:
         /**
          * @brief The internal representation of the matrix.
@@ -28,7 +28,7 @@ namespace synmath {
          * @param m 
          * @param n 
          */
-        Matrix(uint32_t m, uint32_t n);
+        SynMatrix(uint32_t m, uint32_t n);
     };
 };
 

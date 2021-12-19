@@ -6,14 +6,14 @@
 
 namespace synmath {
 
-    class Vector : public Matrix {
+    class SynVector : public SynMatrix {
     public:
         /**
          * @brief Construct a new Vector object
          * 
          * @param l The list which initializes the vector object.
          */
-        Vector(std::initializer_list<double> l);
+        SynVector(std::initializer_list<double> l);
 
         /**
          * @brief Performs vectorwise sum between v (this) and w.
@@ -23,7 +23,7 @@ namespace synmath {
          * @param w The other vector
          * @return Vector The result of the operation described above
          */
-        Vector operator+(const Vector& w);
+        SynVector operator+(const SynVector& w);
 
         /**
          * @brief Performs scalar product between v (this) and w.
@@ -33,7 +33,7 @@ namespace synmath {
          * @param w The other vector
          * @return Vector The result of the operation described above
          */
-        Vector operator*(const Vector& w);
+        SynVector operator*(const SynVector& w);
 
         /**
          * @brief Performs vectorwise sum between v (this) and w.
@@ -43,7 +43,7 @@ namespace synmath {
          * @param w The other vector
          * @return Vector The result of the operation described above
          */
-        Vector operator-(const Vector& w);
+        SynVector operator-(const SynVector& w);
     };
 };
 
