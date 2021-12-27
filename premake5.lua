@@ -6,9 +6,9 @@ project "Synapse"
 	language "C++"
 	targetdir "bin/${cfg.buildcfg}"
 	
-	includedirs { "lib", "src" }
+	includedirs { "lib", "src", "test" }
 
-	files { "**.hpp", "**.cpp" }
+	files { "lib/**.hpp", "lib/**.cpp", "src/**.hpp", "src/**.cpp", "vendor/linalg/linalg.h" }
 
 	filter "configurations:Debug"
 		defines { "DEBUG" }

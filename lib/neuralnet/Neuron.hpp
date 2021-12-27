@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 
-#include <math/SynVector.hpp>
+#include "../vendor/linalg/linalg.h"
 
 namespace synnet {
 
@@ -13,13 +13,13 @@ namespace synnet {
      * 
      * @tparam T The output parameter from the activation function.
      */
-    template <typename T>
+    template <typename T, int N>
     class Neuron {
     private:
         /**
          * @brief Neuron weight vector.
          */
-        synmath::SynVector _weights;
+        linalg::vec<double, N> _weights;
 
         /**
          * @brief Neuron bias value.
@@ -35,11 +35,11 @@ namespace synnet {
         /**
          * @brief Construct a new Neuron object
          * Sets the weights, bias and activation function.
-         * @param w 
-         * @param b 
-         * @param fn 
+         * @param w The neuron weights vector.
+         * @param b The neuron bias
+         * @param fn The neuron activation function
          */
-        Neuron(std::initializer_list<double> w, double b, std::function<T(double)> fn)
+        Neuron(linalg::vec<double, N> w, double b, std::function<T(double)> fn)
             : _weights(w), _bias(b), _act_func(fn) {}
 
         /**
@@ -50,10 +50,10 @@ namespace synnet {
          *      f(n) = f(W^Tx + b) = f(\sum_{i=1}^n (w_ix_i) + b)
          * \f]
          * @param input The neuron input values.
-         * @return T 
+         * @return T The activation function output for this neuron based on the input
          */
-        inline T output(synmath::SynVector input) {
-            return _act_func(_weights * input + _bias);
+        inline T output(const linalg::vec<double, N> input) {
+            return _act_func(dot(_weights,input) + _bias);
         }
 
         /**
@@ -61,7 +61,7 @@ namespace synnet {
          * 
          * @param wp 
          */
-        inline void set_weights(synmath::SynVector wp) {
+        inline void set_weights(const linalg::vec<double, N> wp) {
             _weights = wp;
         }
 
@@ -70,16 +70,16 @@ namespace synnet {
          * 
          * @param bp 
          */
-        inline void set_bias(synmath::SynVector bp) {
+        inline void set_bias(double bp) {
             _bias = bp;
         }
 
         /**
          * @brief Get the weights vector
          * 
-         * @return synmath::SynVector 
+         * @return linalg::vec<T, N>
          */
-        inline synmath::SynVector get_weights() const {
+        inline linalg::vec<double, N> get_weights() const {
             return _weights;
         }
 

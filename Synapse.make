@@ -16,7 +16,7 @@ ifeq ($(config),debug)
   TARGET = $(TARGETDIR)/Synapse
   OBJDIR = obj/Debug
   DEFINES += -DDEBUG
-  INCLUDES += -Ilib -Isrc
+  INCLUDES += -Ilib -Isrc -Itest
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
@@ -43,7 +43,7 @@ ifeq ($(config),release)
   TARGET = $(TARGETDIR)/Synapse
   OBJDIR = obj/Release
   DEFINES +=
-  INCLUDES += -Ilib -Isrc
+  INCLUDES += -Ilib -Isrc -Itest
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -65,7 +65,6 @@ all: prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/Matrix.o \
 	$(OBJDIR)/main.o \
 
 RESOURCES := \
@@ -125,9 +124,6 @@ else
 $(OBJECTS): | $(OBJDIR)
 endif
 
-$(OBJDIR)/Matrix.o: lib/math/Matrix.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/main.o: src/main.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
