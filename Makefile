@@ -9,25 +9,19 @@ ifndef verbose
 endif
 
 ifeq ($(config),debug)
-  Synapse_config = debug
   NeuronTest_config = debug
+  LayerTest_config = debug
 endif
 ifeq ($(config),release)
-  Synapse_config = release
   NeuronTest_config = release
+  LayerTest_config = release
 endif
 
-PROJECTS := Synapse NeuronTest
+PROJECTS := NeuronTest LayerTest
 
 .PHONY: all clean help $(PROJECTS) 
 
 all: $(PROJECTS)
-
-Synapse:
-ifneq (,$(Synapse_config))
-	@echo "==== Building Synapse ($(Synapse_config)) ===="
-	@${MAKE} --no-print-directory -C . -f Synapse.make config=$(Synapse_config)
-endif
 
 NeuronTest:
 ifneq (,$(NeuronTest_config))
@@ -35,9 +29,15 @@ ifneq (,$(NeuronTest_config))
 	@${MAKE} --no-print-directory -C . -f NeuronTest.make config=$(NeuronTest_config)
 endif
 
+LayerTest:
+ifneq (,$(LayerTest_config))
+	@echo "==== Building LayerTest ($(LayerTest_config)) ===="
+	@${MAKE} --no-print-directory -C . -f LayerTest.make config=$(LayerTest_config)
+endif
+
 clean:
-	@${MAKE} --no-print-directory -C . -f Synapse.make clean
 	@${MAKE} --no-print-directory -C . -f NeuronTest.make clean
+	@${MAKE} --no-print-directory -C . -f LayerTest.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -49,7 +49,7 @@ help:
 	@echo "TARGETS:"
 	@echo "   all (default)"
 	@echo "   clean"
-	@echo "   Synapse"
 	@echo "   NeuronTest"
+	@echo "   LayerTest"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"
