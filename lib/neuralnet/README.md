@@ -1,0 +1,1 @@
+TODO: Improve class hierarchy and add base class
