@@ -36,3 +36,4 @@ obj
 bin
 .vscode
 premake5
+*.make
