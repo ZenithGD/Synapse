@@ -17,15 +17,16 @@ namespace synnet
         /**
          * @brief Neuron bias values for each neuron in the layer.
          */
-        linalg::mat<double, M> _bias;
+        linalg::vec<double, M> _bias;
 
         /**
          * @brief Activation function for the given layer's M neurons.
          * Returns a value in T's domain based on the neuron output's value.
          */
+
+        // TODO: Change double to vector
         std::function<T(double)> _act_func;
     public:
-        Layer(/* args */);
         /**
          * @brief Construct a new Layer object
          * Sets the weights, bias and activation function.
@@ -33,9 +34,8 @@ namespace synnet
          * @param b The layer bias vector.
          * @param fn The neuron activation function
          */
-        Neuron(linalg::mat<double, M, N> w, linalg::vec<double, N> b, std::function<T(double)> fn)
+        Layer(linalg::mat<double, M, N> w, linalg::vec<double, M> b, std::function<T(double)> fn)
             : _weights(w), _bias(b), _act_func(fn) {}
-        ~Layer();
 
         /**
          * @brief Calculate neuron output for the given input x.
@@ -48,7 +48,8 @@ namespace synnet
          * @return T The activation function output for this neuron based on the input
          */
         inline T output(const linalg::vec<double, N> input) {
-            return _act_func(mul(_weights,input) + _bias);
+            auto v = mul(_weights,input);
+            return _act_func(v + _bias);
         }
 
         /**
