@@ -37,3 +37,4 @@ bin
 .vscode
 premake5
 *.make
+Makefile
