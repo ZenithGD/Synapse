@@ -1,46 +1,41 @@
-#ifndef __NEURON_H__
-#define __NEURON_H__
-
-#include <vector>
-#include <functional>
+#ifndef __LAYER_H__
+#define __LAYER_H__
 
 #include <linalg/linalg.h>
 
-namespace synnet {
-
-    /**
-     * @brief Class for representing a neural network neuron.
-     * 
-     * @tparam T The output parameter from the activation function.
-     */
-    template <typename T, int N>
-    class Neuron {
+namespace synnet
+{
+    template <typename T, int M, int N>
+    class Layer
+    {
     private:
         /**
-         * @brief Neuron weight vector.
+         * @brief Layer weight matrix.
          */
-        linalg::vec<double, N> _weights;
+        linalg::mat<double, M, N> _weights;
 
         /**
-         * @brief Neuron bias value.
+         * @brief Neuron bias values for each neuron in the layer.
          */
-        double _bias;
+        linalg::mat<double, M> _bias;
 
         /**
-         * @brief Activation function for the given neuron.
+         * @brief Activation function for the given layer's M neurons.
          * Returns a value in T's domain based on the neuron output's value.
          */
         std::function<T(double)> _act_func;
     public:
+        Layer(/* args */);
         /**
-         * @brief Construct a new Neuron object
+         * @brief Construct a new Layer object
          * Sets the weights, bias and activation function.
-         * @param w The neuron weights vector.
-         * @param b The neuron bias
+         * @param w The layer weights matrix.
+         * @param b The layer bias vector.
          * @param fn The neuron activation function
          */
-        Neuron(linalg::vec<double, N> w, double b, std::function<T(double)> fn)
+        Neuron(linalg::mat<double, M, N> w, linalg::vec<double, N> b, std::function<T(double)> fn)
             : _weights(w), _bias(b), _act_func(fn) {}
+        ~Layer();
 
         /**
          * @brief Calculate neuron output for the given input x.
@@ -53,7 +48,7 @@ namespace synnet {
          * @return T The activation function output for this neuron based on the input
          */
         inline T output(const linalg::vec<double, N> input) {
-            return _act_func(dot(_weights,input) + _bias);
+            return _act_func(mul(_weights,input) + _bias);
         }
 
         /**
@@ -61,7 +56,7 @@ namespace synnet {
          * 
          * @param wp 
          */
-        inline void set_weights(const linalg::vec<double, N> wp) {
+        inline void set_weights(const linalg::mat<double, M, N> wp) {
             _weights = wp;
         }
 
@@ -70,28 +65,30 @@ namespace synnet {
          * 
          * @param bp 
          */
-        inline void set_bias(const double bp) {
+        inline void set_bias(linalg::vec<double, N> bp) {
             _bias = bp;
         }
 
         /**
          * @brief Get the weights vector
          * 
-         * @return linalg::vec<T, N>
+         * @return linalg::mat<double, M, N>
          */
-        inline linalg::vec<double, N> get_weights() const {
+        inline linalg::mat<double, M, N> get_weights() const {
             return _weights;
         }
 
         /**
          * @brief Get the bias value
          * 
-         * @return double
+         * @return linalg::vec<double, N>
          */
-        inline double get_bias() const {
+        inline linalg::vec<double, N> get_bias() const {
             return _bias;
         }
     };
-};
+} // namespace synnet
 
-#endif // __NEURON_H__
+
+
+#endif // __LAYER_H__

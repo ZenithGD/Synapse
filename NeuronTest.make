@@ -13,10 +13,10 @@ endif
 ifeq ($(config),debug)
   RESCOMP = windres
   TARGETDIR = bin/${cfg.buildcfg}
-  TARGET = $(TARGETDIR)/Synapse
-  OBJDIR = obj/Debug/Synapse
+  TARGET = $(TARGETDIR)/NeuronTest
+  OBJDIR = obj/Debug/NeuronTest
   DEFINES += -DDEBUG
-  INCLUDES += -Ilib -Isrc -Itest -Ivendor
+  INCLUDES += -Ilib -Ivendor
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -g
@@ -40,10 +40,10 @@ endif
 ifeq ($(config),release)
   RESCOMP = windres
   TARGETDIR = bin/${cfg.buildcfg}
-  TARGET = $(TARGETDIR)/Synapse
-  OBJDIR = obj/Release/Synapse
+  TARGET = $(TARGETDIR)/NeuronTest
+  OBJDIR = obj/Release/NeuronTest
   DEFINES +=
-  INCLUDES += -Ilib -Isrc -Itest -Ivendor
+  INCLUDES += -Ilib -Ivendor
   FORCE_INCLUDE +=
   ALL_CPPFLAGS += $(CPPFLAGS) -MMD -MP $(DEFINES) $(INCLUDES)
   ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -O2
@@ -65,7 +65,7 @@ all: prebuild prelink $(TARGET)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/main.o \
+	$(OBJDIR)/testNeuron.o \
 
 RESOURCES := \
 
@@ -77,7 +77,7 @@ ifeq (.exe,$(findstring .exe,$(ComSpec)))
 endif
 
 $(TARGET): $(GCH) ${CUSTOMFILES} $(OBJECTS) $(LDDEPS) $(RESOURCES) | $(TARGETDIR)
-	@echo Linking Synapse
+	@echo Linking NeuronTest
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
 
@@ -100,7 +100,7 @@ else
 endif
 
 clean:
-	@echo Cleaning Synapse
+	@echo Cleaning NeuronTest
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
 	$(SILENT) rm -rf $(OBJDIR)
@@ -124,7 +124,7 @@ else
 $(OBJECTS): | $(OBJDIR)
 endif
 
-$(OBJDIR)/main.o: src/main.cpp
+$(OBJDIR)/testNeuron.o: test/testNeuron.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 

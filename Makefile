@@ -10,12 +10,14 @@ endif
 
 ifeq ($(config),debug)
   Synapse_config = debug
+  NeuronTest_config = debug
 endif
 ifeq ($(config),release)
   Synapse_config = release
+  NeuronTest_config = release
 endif
 
-PROJECTS := Synapse
+PROJECTS := Synapse NeuronTest
 
 .PHONY: all clean help $(PROJECTS) 
 
@@ -27,8 +29,15 @@ ifneq (,$(Synapse_config))
 	@${MAKE} --no-print-directory -C . -f Synapse.make config=$(Synapse_config)
 endif
 
+NeuronTest:
+ifneq (,$(NeuronTest_config))
+	@echo "==== Building NeuronTest ($(NeuronTest_config)) ===="
+	@${MAKE} --no-print-directory -C . -f NeuronTest.make config=$(NeuronTest_config)
+endif
+
 clean:
 	@${MAKE} --no-print-directory -C . -f Synapse.make clean
+	@${MAKE} --no-print-directory -C . -f NeuronTest.make clean
 
 help:
 	@echo "Usage: make [config=name] [target]"
@@ -41,5 +50,6 @@ help:
 	@echo "   all (default)"
 	@echo "   clean"
 	@echo "   Synapse"
+	@echo "   NeuronTest"
 	@echo ""
 	@echo "For more information, see https://github.com/premake/premake-core/wiki"
