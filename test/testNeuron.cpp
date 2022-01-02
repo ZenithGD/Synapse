@@ -16,13 +16,15 @@ std::pair<linalg::vec<double, 2>, bool> testCase1
 
 int main() {
 
-    synnet::Neuron<bool, 2> neuron({-1, 0}, 225, 
-        [](double v) -> bool { return v > 0; });
+    synnet::Neuron<bool, 2> neuron({-1, 1}, 0, 
+        [](double v) -> bool { return v >= 0; });
 
     synunittest::unitTestNeuron<bool, 2> unittest(neuron);
     unittest.performUnitTestSuite({
-        testCase1({150, 0.8}, true),
-        testCase1({260, 0.6}, false)
+        testCase1({2, 1}, false),
+        testCase1({1, 2}, true),
+        testCase1({31, 2}, false),
+        testCase1({-1, -2}, false)
     });
     return 0;
 }

@@ -12,6 +12,7 @@
 
 // Vendor libraries
 #include <linalg/linalg.h>
+using namespace linalg::ostream_overloads;
 
 // Constants
 const std::string ANSI_GREEN   = "\u001b[32m";
@@ -89,7 +90,7 @@ namespace synunittest {
             std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
             try {
-                auto r = _layer.output(input);
+                T r = _layer.output(input);
                 result = r == expectedOutput;
                 if ( result ) {
                     std::cout << ANSI_GREEN << "[PASSED] " 
