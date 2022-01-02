@@ -1,5 +1,4 @@
-#ifndef __TESTSYNAPSE_H__
-#define __TESTSYNAPSE_H__
+#pragma once
 
 // Standard libraries
 #include <iostream>
@@ -130,5 +129,3 @@ namespace synunittest {
         }
     };
 }
-
-#endif // __TESTSYNAPSE_H__

@@ -1,5 +1,4 @@
-#ifndef __NEURON_H__
-#define __NEURON_H__
+#pragma once
 
 #include <vector>
 #include <functional>
@@ -93,5 +92,3 @@ namespace synnet {
         }
     };
 };
-
-#endif // __NEURON_H__

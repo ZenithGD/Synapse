@@ -1,5 +1,4 @@
-#ifndef __LAYER_H__
-#define __LAYER_H__
+#pragma once
 
 #include <linalg/linalg.h>
 
@@ -90,7 +89,3 @@ namespace synnet
         }
     };
 } // namespace synnet
-
-
-
-#endif // __LAYER_H__
