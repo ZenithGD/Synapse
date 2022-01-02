@@ -17,7 +17,7 @@ int main() {
 
     synnet::Layer<linalg::vec<bool, 3>, 3, 2> l(
         {{0, 1, -1}, {-1, 0, 100}}, 
-        {0.55, 240, -150}, 
+        {0.55, -240, 150}, 
         [](linalg::vec<double, 3> vec) -> linalg::vec<bool, 3> { 
             return linalg::apply([](double v) {
                 std::cout << v << std::endl;
@@ -28,7 +28,8 @@ int main() {
 
     synunittest::unitTestLayer<linalg::vec<bool, 3>, 3, 2> unittest(l);
     unittest.performUnitTestSuite({
-        testCase1({150, 0.8}, {true, false, false}),
+        testCase1({200, 0.2}, {true, false, false}),
+        testCase1({150, 0.8}, {false, false, true}),
         testCase1({300, 0.8}, {false, true, false})
     });
     return 0;
