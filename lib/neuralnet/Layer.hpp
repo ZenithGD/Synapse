@@ -2,7 +2,7 @@
 
 #include <linalg/linalg.h>
 
-namespace synnet
+namespace syn
 {
     template <typename T, int M, int N>
     class Layer
@@ -23,7 +23,7 @@ namespace synnet
          * Returns a value in T's domain based on the neuron output's value.
          */
 
-        std::function<T(linalg::vec<double, M>)> _act_func;
+        std::function<linalg::vec<T, M>(linalg::vec<double, M>)> _act_func;
     public:
         /**
          * @brief Construct a new Layer object
@@ -32,7 +32,7 @@ namespace synnet
          * @param b The layer bias vector.
          * @param fn The neuron activation function
          */
-        Layer(linalg::mat<double, M, N> w, linalg::vec<double, M> b, std::function<T(linalg::vec<double, M>)> fn)
+        Layer(linalg::mat<double, M, N> w, linalg::vec<double, M> b, std::function<linalg::vec<T, M>(linalg::vec<double, M>)> fn)
             : _weights(w), _bias(b), _act_func(fn) {}
 
         /**
@@ -45,11 +45,8 @@ namespace synnet
          * @param input The neuron input values.
          * @return T The activation function output for this neuron based on the input
          */
-        inline T output(const linalg::vec<double, N> input) {
-            auto v = mul(_weights,input);
-            std::cout << _weights << " * " << input << " + " << _bias << std::endl;
-            std::cout << v << " + " << _bias << " = " << v + _bias << std::endl;
-            return _act_func(v + _bias);
+        inline linalg::vec<T, M> output(const linalg::vec<double, N> input) {
+            return _act_func(mul(_weights,input) + _bias);
         }
 
         /**

@@ -5,7 +5,7 @@
 
 #include <linalg/linalg.h>
 
-namespace synnet {
+namespace syn {
 
     /**
      * @brief Class for representing a neural network neuron.

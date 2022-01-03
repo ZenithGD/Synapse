@@ -3,6 +3,8 @@
 #include <neuralnet/Layer.hpp>
 #include "testSynapse.hpp"
 
+#include <activation/ActivationFunctions.hpp>
+
 #include <linalg/linalg.h>
 
 // functions for quickly defining test cases for test suites 
@@ -14,23 +16,19 @@ std::pair<linalg::vec<double, 2>, linalg::vec<bool, 3>> testCase1
 }
 
 int main() {
-
-    syn::Layer<bool, 3, 2> l(
+    
+    syn::Layer<double, 3, 2> l(
         {{0, 1, -1}, {-1, 0, 100}}, 
         {0.55, -240, 150}, 
-        [](linalg::vec<double, 3> vec) -> linalg::vec<bool, 3> { 
-            return linalg::apply([](double v) {
-                std::cout << v << std::endl;
-                return v >= 0;
-            }, vec);
-        }
+        syn::relu<3>
     );
 
-    synunittest::unitTestLayer<bool, 3, 2> unittest(l);
-    unittest.performUnitTestSuite({
-        testCase1({200, 0.2}, {true, false, false}),
+    synunittest::unitTestLayer<double, 3, 2> unittest(l);
+    unittest.performFunctionUnitTestSuite<bool>({
+        testCase1({200, 0.2}, {true,  false, false}),
         testCase1({150, 0.8}, {false, false, true}),
-        testCase1({300, 0.8}, {false, true, false})
-    });
+        testCase1({300, 0.8}, {false, true,  false})
+    }, [](double v) -> bool {return v > 0;});
+    
     return 0;
 }

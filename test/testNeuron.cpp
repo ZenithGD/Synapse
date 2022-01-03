@@ -16,7 +16,7 @@ std::pair<linalg::vec<double, 2>, bool> testCase1
 
 int main() {
 
-    synnet::Neuron<bool, 2> neuron({-1, 1}, 0, 
+    syn::Neuron<bool, 2> neuron({-1, 1}, 0, 
         [](double v) -> bool { return v >= 0; });
 
     synunittest::unitTestNeuron<bool, 2> unittest(neuron);
