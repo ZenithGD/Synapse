@@ -7,7 +7,7 @@ function setupTest(name, testfile)
     language "C++"
 	targetdir "bin/${cfg.buildcfg}"
 	
-	includedirs { "lib", "vendor" }
+	includedirs { "lib", "vendor", "%{prj.name}/vendor/spdlog/include", }
 
 	files { "lib/**.hpp", "lib/**.cpp", "vendor/linalg/linalg.h",
             "test/testSynapse.hpp", testfile }
@@ -22,3 +22,4 @@ end
 	
 setupTest("NeuronTest", "test/testNeuron.cpp")
 setupTest("LayerTest", "test/testLayer.cpp")
+setupTest("ActivationsTest", "test/testActivations.cpp")
