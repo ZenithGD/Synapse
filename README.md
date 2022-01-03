@@ -13,6 +13,7 @@ git clone --recurse-submodules https://github.com/ZenithGD/Synapse.git
 
 This loads the source and every required submodule. This library relies on the following libraries, which can be found in the vendor folder:
 - [linalg](https://github.com/sgorsten/linalg) for algebraic computation.
+- [spdlog](https://github.com/gabime/spdlog) for logging on debug
 
 ## What can I do with Synapse?
 
